@@ -1,0 +1,78 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class ClassSchedulingSystem {
+    
+    // Hashmap to store the class schedule
+    private static HashMap<String, ArrayList<String>> classSchedule = new HashMap<String, ArrayList<String>>();
+
+    public static void main(String[] args) {
+        
+        // Initialize scanner object to read user input
+        Scanner scanner = new Scanner(System.in);
+        
+        while (true) {
+            // Display the main menu
+            System.out.println("Welcome to the Class Scheduling System!");
+            System.out.println("1. Add a Class Schedule");
+            System.out.println("2. View Class Schedule");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice (1-3): ");
+
+            // Read the user's choice
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+            
+            switch (choice) {
+                case 1:
+                    addClassSchedule(scanner);
+                    break;
+                case 2:
+                    viewClassSchedule();
+                    break;
+                case 3:
+                    System.out.println("Exiting the system...");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice! Please enter a number between 1-3.");
+            }
+        }
+    }
+    
+    // Method to add class schedule
+    public static void addClassSchedule(Scanner scanner) {
+        System.out.print("Enter the day of the week (e.g. Monday, Tuesday, etc.): ");
+        String dayOfWeek = scanner.nextLine();
+        
+        System.out.print("Enter the start time of the class (e.g. 9:00AM): ");
+        String startTime = scanner.nextLine();
+        
+        System.out.print("Enter the end time of the class (e.g. 10:30AM): ");
+        String endTime = scanner.nextLine();
+        
+        String classTime = startTime + " - " + endTime;
+        
+        if (classSchedule.containsKey(dayOfWeek)) {
+            classSchedule.get(dayOfWeek).add(classTime);
+        } else {
+            ArrayList<String> times = new ArrayList<String>();
+            times.add(classTime);
+            classSchedule.put(dayOfWeek, times);
+        }
+        
+        System.out.println("Class schedule added successfully!");
+    }
+    
+    // Method to view class schedule
+    public static void viewClassSchedule() {
+        if (classSchedule.isEmpty()) {
+            System.out.println("No class schedule available!");
+        } else {
+            System.out.println("Class Schedule:");
+            for (String dayOfWeek : classSchedule.keySet()) {
+                System.out.println(dayOfWeek + ": " + classSchedule.get(dayOfWeek));
+            }
+        }
+    }
+}
